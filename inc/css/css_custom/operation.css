@@ -1,0 +1,34 @@
+.operation-card {
+    margin-bottom: 2rem;
+    border-radius: 2px;
+    height: 50px;
+}
+
+.operation-card .search-transection h4 {
+    font-size: 1.7rem;
+    margin: 0;
+}
+
+.operation-card .search-transection input {
+    height: 3.1rem;
+    border-radius: 2px;
+    border: 0.5px solid rgb(218, 218, 218);
+}
+
+.select_filter {
+    width: 220px;
+    height: 50px;
+    border-radius: 2px;
+}
+
+.select_filter:focus {
+    outline: none;
+    border: none;
+}
+
+
+.operation-card .search-transection .btn-ct {
+    background-color: rgb(173, 1, 1);
+    border: none;
+}
+

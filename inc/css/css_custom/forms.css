@@ -1,0 +1,38 @@
+.card-forms {
+    background: rgb(255, 255, 255);
+    padding: 2rem 1.2rem;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    position: relative;
+}
+
+.card-forms-width {
+    width: 850px;
+}
+
+.card-forms .title-forms {
+    font-size: 1.6rem;
+    margin-bottom: 2.3rem;
+    color: #141414;
+}
+
+.card-forms .card-body label {
+    color: #312d2d;
+    font-family: ChatThai-Regular;
+}
+
+.card-forms .card-body input, select {
+    height: 2.68rem;
+    border-radius: 2px;
+    border: 0.5px solid rgb(218, 218, 218);
+    color: #494949;
+}
+
+.card-forms .card-body select {
+    border-radius: 2px;
+}
+
+.card-forms .card-body p {
+    font-family: ChatThai-Light;
+    margin: 0;
+}

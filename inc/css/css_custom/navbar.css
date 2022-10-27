@@ -1,0 +1,122 @@
+/* header */
+header {
+    margin-bottom: 40px;
+}
+
+/* navbar top */
+header .navbar-top {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    z-index: 2;
+    background-color: #ffbc1c;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+header .navbar-top .logo h4 {
+    font-size: 30px;
+}
+
+header .navbar-top .email p {
+    font-size: 15px;
+}
+
+header .navbar-top .logo h4 {
+    font-size: 30px;
+}
+
+/* navbar bottom */
+header .navbar-bottom {
+    width: 100%;
+    height: 45px;
+    z-index: 1;
+    position: relative;
+    background-color: rgb(249, 178, 8);
+}
+
+header .navbar-bottom .collapsible-menu ul {
+    padding-left: 0;
+    display: flex;
+}
+
+header .navbar-bottom .collapsible-menu ul li {
+    margin-top: 20px !important;
+    padding-right: 2.1rem;
+}
+
+header .navbar-bottom .collapsible-menu ul li a {
+    font-size: 1.05rem;
+}
+
+header .navbar-bottom .collapsible-menu ul li:last-child a {
+    color: #bf0707;
+}
+
+header .navbar-bottom .dropdown-link .dropdown {
+    width: 150px;
+    position: absolute;
+    display: block;
+    background:#fff;
+    top: 120%;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+header .navbar-bottom .dropdown-link .dropdown li {
+    position: relative;
+    padding-right: 0;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+}
+
+header .navbar-bottom .dropdown-link .dropdown li:hover {
+    background-color: #e9e9e9;
+}
+
+header .navbar-bottom .dropdown-link .dropdown li a {
+    color:rgb(17, 17, 17) !important;
+    padding: 0.65rem;
+}
+
+header .navbar-bottom .dropdown-link:hover .dropdown {
+    top: 105%;
+    opacity: 1;
+    visibility: visible;
+}
+
+header .navbar-bottom .dropdown-link a i {
+    transition: 0.4s;
+}
+
+header .navbar-bottom .dropdown-link:hover a i {
+    transform: rotate(-180deg);
+}
+
+header .navbar-bottom ul li a:hover {
+    color: rgb(43, 42, 42) !important;
+}
+
+/*responsive */
+@media screen and (max-width: 700px) {
+
+    header .navbar-top .logo h4 {
+        font-size: 1.5rem;
+    }
+
+    header .navbar-top .email p {
+        font-size: 0.9rem;
+    }
+
+    header .navbar-bottom .collapsible-menu ul li {
+        display: none;
+    }
+
+    header .navbar-bottom .collapsible-menu ul li:last-child {
+        display: block;
+    }
+
+}

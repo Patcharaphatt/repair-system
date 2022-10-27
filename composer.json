@@ -1,0 +1,17 @@
+{
+    "name": "user/repair-system",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patcharaphat",
+            "email": "patcharaphat.pit@sbac.ac.th"
+        }
+    ],
+    "require": {
+        "claviska/simpleimage": "^2.5"
+    }
+}

@@ -1,0 +1,16 @@
+@font-face {
+    font-family: ChatThai-Light;
+    src: url(CSChatThaiUI-Light.otf);
+}
+@font-face {
+    font-family: ChatThai-Regular;
+    src: url(CSChatThaiUI.otf);
+}
+@font-face {
+    font-family: ChatThai-Bold;
+    src: url(CSChatThaiUI-Bold.otf);
+}
+
+* {
+    font-family: ChatThai-Regular;
+}

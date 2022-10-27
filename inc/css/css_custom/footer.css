@@ -1,0 +1,13 @@
+footer {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(233, 233, 233);
+    border-top: 0.02rem solid rgb(185, 185, 185);
+    margin-top: 3rem;
+    /* position: absolute;
+    bottom: 0; */
+}
+
+footer p {
+    margin: 0;
+}
