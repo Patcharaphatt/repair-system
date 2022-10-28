@@ -3,8 +3,12 @@
 
 <?php
 
-use App\Model\Inventory;
+use App\Model\Classroom;
+
+// print_r($_REQUEST);
+// exit;
 ?>
+
 
 
 <!DOCTYPE html>
@@ -35,13 +39,13 @@ use App\Model\Inventory;
 					<div class="col-lg-9 col-md-9 search-transection d-flex align-items-center">
 						<div class="d-flex w-100 align-items-center">
 							<div class="mr-component">
-								<h4>รายการอาคารเรียน</h4>
+								<h4>อาคาร <?php echo $_REQUEST['build_Name'];?> ชั้น <?php echo $_REQUEST['floor'];?></h4>
 							</div>
 						</div>
 					</div>
 
 					<div class="col-lg-3 col-md-3 btn-add-transection d-flex justify-content-end align-items-center ">
-						<a href="form_add_build.php" class="btn-ct btn btn-success text-align-center me-2 visibility">เพิ่มอาคาร</a>
+						<a href="form_add_build.php" class="btn-ct btn btn-success text-align-center me-2 visibility">+ ห้องเรียน</a>
 					</div>
 
 				</div>		
@@ -51,32 +55,33 @@ use App\Model\Inventory;
 				<table class="table table-hover align-middle" id="dataTable">
 					<thead>
 						<tr>
-							<th class="elm-1 text-center">อันดับ</th>
-							<th class="elm-2">ชื่อ-อาคาร</th>
-							<th class='elm-2 hidden'>จำนวนชั้น</th>
-							<th class='elm-3 hidden'>จำนวนห้อง</th>
+							<th class="elm-2 text-center">ห้องเรียน</th>
+							<th class="elm-2 text-center">สถานะ</th>
                             <th></th>
 						</tr>
 					</thead> 
 					<tbody>
-
 								<?php
 								
-									$inventoryObj = new inventory();
-									$inventories = $inventoryObj->getAllInventory();
+									$classroomObj = new classroom();
+									$classrooms = $classroomObj->getAllRooms($_REQUEST);
 									$n=0;
-									foreach($inventories as $inventory) {
+									foreach($classrooms as $classroom) {
 										$n++;
+
+										if($classroom['status'] <> 0) {
+											$status = 'มีเจ้าของเรียบร้อยแล้ว';
+										}else {
+											$status ='ยังไม่มีเจ้าของห้อง';
+										}
 			
 										echo "
 											<tr>
-												<td class='elm-1 text-center'>{$n}</td>
-												<td class='elm-2'>{$inventory['inventoryName']}</td>
-												<td class='elm-2 hidden'>{$serial}</td>
-												<td class='elm-3 hidden'>{$inventory['categoryTitle']}</td>
+												<td class='elm-2 text-center'>{$classroom['name']}</td>
+												<td class='elm-2 text-center'>{$status}</td>
 												   
 												<td class='d-flex justify-content-end'>
-													<a class='btn btn-warning' id='confirm_delete' onclick='return confirmDelete()' href='save.php?inventory_Name={$inventory['inventoryName']}'>ดูรายการ</a>				
+													<a class='btn btn-warning' id='confirm_delete' onclick='return confirmDelete()' href='save.php?build_Name={$classroom['build']}&floor={$classroom['floor']}'>ดูรายการอุปกรณ์</a>				
 												</td>
 
 											</tr>
@@ -98,13 +103,6 @@ use App\Model\Inventory;
 			$(document).ready( function () {
     			$('#dataTable').DataTable();
 			} );
-		</script>
-
-		<script>
-			// ยืนยันการลบข้อมูล
-			function confirmDelete() {
-				return confirm('คุณแน่ใจ ที่จะลบรายการนี้');
-			}
 		</script>
 
 </body>

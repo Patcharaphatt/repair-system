@@ -3,17 +3,7 @@
 
 <?php
 
-use App\Model\Inventory;
-use App\Model\Brand;
-use App\Model\Type;
-use App\Model\Category;
-use App\Model\Unit;
-
-
-if (isset($_REQUEST['action']) == 'edit') {
-    $inventoryObj = new inventory;
-    $inventory = $inventoryObj->getInventoryById($_REQUEST['Id']); 
-}
+use App\Model\Classroom;
 
 ?>
 
@@ -40,7 +30,7 @@ if (isset($_REQUEST['action']) == 'edit') {
 				<div class="card-forms">
                     <!-- title forms -->
 					<div class="card-header text-white d-flex justify-content-between">
-                        <h4 class="title-forms">ฟอร์ม<?php echo (isset($_REQUEST['action'])=='edit') ? "แก้ไขข้อมูลอุปกรณ์" : "เพิ่มอาคารเรียน";?></h4>
+                        <h4 class="title-forms">ฟอร์มเพิ่มอาคารเรียน</h4>
                     </div>
 
                     <!-- forms -->
@@ -48,8 +38,7 @@ if (isset($_REQUEST['action']) == 'edit') {
 						<form action="save.php" method="GET">
                             
                             <!-- hidden input -->
-                            <input type="hidden" name="action" value="<?php echo (isset($_REQUEST['action'])=='edit') ? "edit" : "add";?>">
-                            <input type="hidden" name="get_inventory_Name_ById" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $inventory['inventoryName'] : "";?>">
+                            <input type="hidden" name="action" value="add-build">
 
                             <!-- forms Groups -->
                             <div class="row mb-4">
@@ -57,7 +46,7 @@ if (isset($_REQUEST['action']) == 'edit') {
                                     <!-- name build -->
                                     <div class="form-group">
                                         <label for="build">ชื่อ-อาคาร</label>
-                                        <input type="text" name="build" id="build" class="form-control my-2" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $inventory['inventoryName'] : "";?>" required>
+                                        <input type="number" name="build" id="build" class="form-control my-2" value="" required>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +56,7 @@ if (isset($_REQUEST['action']) == 'edit') {
                                     <!-- name floor -->
                                     <div class="form-group">
                                         <label for="floor">มีกี่ชั้น</label>
-                                        <input type="text" name="floor" id="floor" class="form-control my-2" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $inventory['inventoryName'] : "";?>" required>
+                                        <input type="text" name="floor" id="floor" class="form-control my-2" value="" required>
                                     </div>
                                 </div>
 
@@ -75,13 +64,13 @@ if (isset($_REQUEST['action']) == 'edit') {
                                     <div class="form-group">
                                         <!-- room -->
                                         <label for="room">แต่ละชั้นมีกี่ห้อง</label>
-                                        <input type="text" name="room" id="room" class="form-control my-2" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $inventory['inventoryName'] : "";?>" required>
+                                        <input type="text" name="room" id="room" class="form-control my-2" value="" required>
                                     </div>
                                 </div>
                             </div>
     
                             <button class="btn-ct btn btn-success" id="heckFormsAccount" type="submit" 
-                            onclick="return <?php echo (isset($_REQUEST['action'])=='edit') ? 'confirm_editAcc()':'confirm_createAcc()'; ?>">บันทึกข้อมูล</button>
+                            onclick="return confirm_createAcc()">บันทึกข้อมูล</button>
                         </form>	
 					</div>
 				</div>
@@ -92,10 +81,6 @@ if (isset($_REQUEST['action']) == 'edit') {
     <script>
         function confirm_createAcc() {
             return confirm('ระบบจะเพิ่มข้อมูลรายการนี้เข้าระบบ');
-        }
-
-        function confirm_editAcc() {
-            return confirm('ระบบจะแก้ไขข้อมูลรายการนี้');
         }
     </script>
 </body>

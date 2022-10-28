@@ -48,3 +48,10 @@
     margin: 1.5rem 0;
     font-size: 1.52rem;
 }
+
+
+@media (max-width: 1000px) {
+    .card {
+        width: 100%;
+    }
+}

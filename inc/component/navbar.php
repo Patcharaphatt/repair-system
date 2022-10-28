@@ -38,7 +38,7 @@ $role = $_SESSION['role'];
             <li><a href="/repair-system/ownerClassDepart/index.php">จัดการแผนกผู้แจ้ง</a></li>
             <li><a href="/repair-system/inventory/index.php">จัดการอุปกรณ์</a></li>
             <li><a href="/repair-system/account/index.php">จัดการผู้ใช้งาน</a></li>
-            <li><a href="/repair-system/classroom/index.php">จัดการห้อง</a></li>
+            <li><a href="/repair-system/classroom/rooms/index.php">จัดการห้อง</a></li>
           </ul>
         </li>
         
