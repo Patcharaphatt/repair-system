@@ -7,24 +7,8 @@ use App\Model\Role;
 use App\Model\account;
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>หน้าจัดการผู้ใช้งาน</title>
-	<!-- include link conect file custom css -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/css/css_link/css.inc.link.php";?>
-	
-	<!-- icon link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-</head>
-<body>
-
-	<!-- navbar -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
+<!-- navbar -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
 	<!-- Tables -->
 
@@ -49,8 +33,19 @@ use App\Model\account;
                                             $roles = $rolesObj -> getAllRoles();
                                             foreach($roles as $role) {
                                                 $selected = ($role['roleId'] == $_REQUEST['roleId']) ? "selected" : "";
+												switch($role['roleId']){
+													case 1:
+														$roleTitle = 'แอดมิน';
+														break;
+													case 2:
+														$roleTitle = 'ช่างเทคนิค';
+														break;
+													case 3:
+														$roleTitle = 'ผู้ดูแลห้อง';
+														break;
+												}
                                                 echo "
-                                                    <option value='{$role['roleId']}' {$selected}>{$role['roleTitle']}</option> 
+                                                    <option value='{$role['roleId']}' {$selected}>{$roleTitle}</option> 
                                                 ";
                                             }
                                         ?>
@@ -85,22 +80,45 @@ use App\Model\account;
 					<tbody>
 
 								<?php
-									
-
-									$accountObj = new account();
-									$users = $accountObj->getAllAccount($_REQUEST);
+									$Obj = new account();
+									$users = $Obj->readAllAccount($_REQUEST);
 									$n=0;
 									foreach($users as $user) {
 										$n++;
+
+										switch($user['ROLEID']){
+											case 1:
+												$USER_ROLE_SHOW = "
+													<div class='area-stus admin-color'>
+														<p>แอดมิน</p>
+													</div>
+												";	
+												break;
+											case 2:
+												$USER_ROLE_SHOW = "
+													<div class='area-stus tech-color'>
+														<p>ช่างเทคนิค</p>
+													</div>
+												";	
+												break;
+											case 3:
+												$USER_ROLE_SHOW = "
+													<div class='area-stus ownerRoom-color'>
+														<p>ผู้ดูแลห้อง</p>
+													</div>
+												";	
+												break;
+										}
+
 										echo "
 											<tr>
 												<td class='elm-1 text-center'>{$n}</td>
-												<td class='elm-2'>{$user['fullname']}</td>
-												<td class='elm-3 hidden'>{$user['email']}</td>
+												<td class='elm-2'>{$user['FULL_NAME']}</td>
+												<td class='elm-3 hidden'>{$user['EMAIL']}</td>
 												
 												<td id='role' class='elm-4 hidden'>
 													<div class='container-role-color d-flex justify-content-center'>
-														{$user['role']}
+														{$USER_ROLE_SHOW}
 													</div>
 												</td>
 												
@@ -112,9 +130,9 @@ use App\Model\account;
 															จัดการรายการ
 														</button>
 														<ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
-														<li><a class='dropdown-item' href='details_transection.php?Id={$user['Id']}&action=edit'>ดูรายการ</a></li>
-														<li><a class='dropdown-item' href='form.php?Id={$user['Id']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
-														<li><a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='save.php?Id={$user['Id']}&action=delete' class='btn btn-danger'>ลบรายการ</a></li>
+														<li><a class='dropdown-item' href='details_transection.php?Id={$user['ID']}&action=edit'>ดูรายการ</a></li>
+														<li><a class='dropdown-item' href='form.php?Id={$user['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
+														<li><a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='save.php?Id={$user['ID']}&action=delete' class='btn btn-danger'>ลบรายการ</a></li>
 														</ul>
 													</div>
 				
@@ -128,24 +146,5 @@ use App\Model\account;
 				</div>
 			</div>
 		</div>
-		<!-- footer -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
-
-		<!-- include link conect file custom Javascript -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/script/script_link/script.inc.link.php";?>
-
-		<script>
-			$(document).ready( function () {
-    			$('#dataTable').DataTable();
-			} );
-		</script>
-
-		<script>
-			// ยืนยันการลบข้อมูล
-			function confirmDelete() {
-				return confirm('คุณแน่ใจ ที่จะลบรายการนี้');
-			}
-		</script>
-
-</body>
-</html>
+<!-- footer -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

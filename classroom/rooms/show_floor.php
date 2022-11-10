@@ -5,25 +5,9 @@
 use App\Model\Classroom;
 ?>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title></title>
-	<!-- include link conect file custom css -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/css/css_link/css.inc.link.php";?>
 	
-	<!-- icon link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-</head>
-<body>
-
-	<!-- navbar -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
+<!-- navbar -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
 	<!-- Tables -->
 
@@ -32,18 +16,13 @@ use App\Model\Classroom;
 			<!-- search -->
 			<div class="operation-card">
 				<div class="row">
-					<div class="col-lg-9 col-md-9 search-transection d-flex align-items-center">
+					<div class="col-lg col-md search-transection d-flex align-items-center">
 						<div class="d-flex w-100 align-items-center">
 							<div class="mr-component">
 								<h4>อาคาร <?php echo $_REQUEST['build_Name'];?></h4>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-lg-3 col-md-3 btn-add-transection d-flex justify-content-end align-items-center ">
-						<a href="form_add_build.php" class="btn-ct btn btn-success text-align-center me-2 visibility">เพิ่มชั้นเรียน</a>
-					</div>
-
 				</div>		
             </div>
 					
@@ -59,18 +38,17 @@ use App\Model\Classroom;
 
 								<?php
 								
-									$classroomObj = new classroom();
-									$classrooms = $classroomObj->getAllFloorByBuildName($_REQUEST['build_Name']);
+									$Obj = new classroom();
+									$floors = $Obj->readAllFloorByBuildName($_REQUEST['build_Name']);
 									$n=0;
-									foreach($classrooms as $classroom) {
+									foreach($floors as $floor) {
 										$n++;
-			
 										echo "
 											<tr>
-												<td class='elm-2 text-center'>{$classroom['floor']}</td>
+												<td class='elm-2 text-center'>{$floor['FLOOR']}</td>
 												   
 												<td class='d-flex justify-content-end'>
-													<a class='btn btn-warning' id='confirm_delete' href='show_rooms.php?build_Name={$classroom['build']}&floor={$classroom['floor']}'>ดูรายการ</a>				
+													<a class='btn btn-warning' id='confirm_delete' href='show_rooms.php?build={$floor['BUILD']}&floor={$floor['FLOOR']}'>ดูรายการ</a>				
 												</td>
 
 											</tr>
@@ -82,17 +60,5 @@ use App\Model\Classroom;
 				</div>
 			</div>
 		</div>
-		<!-- footer -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
-
-		<!-- include link conect file custom Javascript -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/script/script_link/script.inc.link.php";?>
-
-		<script>
-			$(document).ready( function () {
-    			$('#dataTable').DataTable();
-			} );
-		</script>
-
-</body>
-</html>
+<!-- footer -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

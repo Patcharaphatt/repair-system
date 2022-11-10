@@ -56,7 +56,7 @@ header .navbar-bottom .dropdown-link .dropdown {
     width: 150px;
     position: absolute;
     display: block;
-    background:#fff;
+    background: #fff;
     top: 120%;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -78,7 +78,7 @@ header .navbar-bottom .dropdown-link .dropdown li:hover {
 }
 
 header .navbar-bottom .dropdown-link .dropdown li a {
-    color:rgb(17, 17, 17) !important;
+    color: rgb(17, 17, 17) !important;
     padding: 0.65rem;
 }
 

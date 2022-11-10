@@ -4,7 +4,7 @@ namespace App\Model;
 
 trait functions {
 
-    private function checkValuesRepeatDB($Table_Name, $Select_Field_Name, $getValuesUser) { // เช็คข้อมูลซ้ำ
+    private function checkValuesRepeatDB($Table_Name, $Select_Field_Name, $getValuesUser, $BOOL="true") { // เช็คข้อมูลซ้ำ
     
         $select = '';
         $where = '';
@@ -33,16 +33,23 @@ trait functions {
                 {$where}
         ";
 
+        // echo $sql;exit;
+
         $stmt = $this->pdo->query($sql);
         $stmt->fetchAll();
-        echo $countRow = $stmt->rowCount();
+        $countRow = $stmt->rowCount();
         // exit;
-    
-        if($countRow === 0) {
-            return true;
+        
+        if ($BOOL === "true") {
+            if($countRow === 0) {
+                return true;
+            }else {
+                return false;
+            }
         }else {
-            return false;
+            return $countRow;
         }
+        
     }
 
 }

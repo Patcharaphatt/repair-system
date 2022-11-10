@@ -1,6 +1,17 @@
 <?php
 $role = $_SESSION['role'];
+$status = $_SESSION['status'];
 ?>
+
+<?php if(isset($_SESSION['alert_welcome'])) { // message box alert ยินดีต้อนรับผู้ใช้งานระบบเข้าสู่ระบบ ?>
+  <script>
+    alert('สวัสดี คุณ <?php echo $_SESSION['name'] ?> ยินดีต้อนรับเข้าสู่ระบบ');
+  </script>
+<?php unset($_SESSION['alert_welcome']); } ?>
+
+
+<!-- tag header -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/html_head.php";?>
 
 <header class="sticky-top">
   <!-- navbar-top -->
@@ -18,13 +29,17 @@ $role = $_SESSION['role'];
     <div class="collapsible-menu" id="collapsible-menu">
       <ul>
         <!-- หน้าหลัก -->
-        <li ><a class="link-item" href="/repair-system/<?php echo $role; ?>/index.php">หน้าหลัก</a></li>
+        <?php if($status === 1) {?>
+          <li ><a class="link-item" href="/repair-system/<?php echo $role; ?>/index.php">หน้าหลัก</a></li>
+        <?php } ?>
         <!-- แก้ไขโปรไฟล์ -->
         <li><a class="link-item" href="/repair-system/My_profile/form.php?action=edit&Id=<?php echo $_SESSION['Id'];?> ">จัดการโปรไฟล์</a></li>
 
         <!-- เมนูเพิ่มแจ้งรายการซ่อม -->
-        <?php if($role === 'Classroom Owner') {?>
-          <li ><a class="link-item" href="#">เพิ่มรายการซ่อม</a></li>
+        <?php if($status === 1) {?>
+          <?php if($role === 'ClassroomOwner') {?>
+            <li ><a class="link-item" href="/repair-system/repair/form.php">เพิ่มรายการซ่อม</a></li>
+          <?php } ?>
         <?php } ?>
 
         <!-- เมนูตั้งค่า -->
@@ -69,14 +84,12 @@ $role = $_SESSION['role'];
                     $message
                 </div>";
             unset($_SESSION['error']);
-        }
-
-        
-          
+        }  
     ?>
 </header>
 
 <script>
+  
   function confirm_logout() {
     return confirm('คุณต้องการที่จะออกจากระบบใช่หรือไม่');
   }

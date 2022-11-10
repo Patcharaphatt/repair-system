@@ -2,28 +2,11 @@
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/auth/auth.php";?>
 
 <?php
-
 use App\Model\Classroom;
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title></title>
-	<!-- include link conect file custom css -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/css/css_link/css.inc.link.php";?>
-	
-	<!-- icon link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-</head>
-<body>
-
-	<!-- navbar -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
+<!-- navbar -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
 	<!-- Tables -->
 
@@ -51,28 +34,23 @@ use App\Model\Classroom;
 				<table class="table table-hover align-middle" id="dataTable">
 					<thead>
 						<tr>
-							<th class="elm-1 text-center">อันดับ</th>
-							<th class="elm-2">ชื่อ-อาคาร</th>
+							<th class="elm-2 text-center">ชื่อ-อาคาร</th>
                             <th></th>
 						</tr>
 					</thead> 
 					<tbody>
 
 								<?php
-								
-									$classroomObj = new classroom();
-									$classrooms = $classroomObj->getAllBuild();
+									$Obj = new classroom();
+									$builds = $Obj->readAllBuild();
 									$n=0;
-									foreach($classrooms as $classroom) {
-										$n++;
-			
+									foreach($builds as $build) {
 										echo "
 											<tr>
-												<td class='elm-1 text-center'>{$n}</td>
-												<td class='elm-2'>{$classroom['build']}</td>
+												<td class='elm-2 text-center'>{$build['BUILD']}</td>
 												   
 												<td class='d-flex justify-content-end'>
-													<a class='btn btn-warning' id='confirm_delete' href='show_floor.php?build_Name={$classroom['build']}'>ดูรายการ</a>				
+													<a class='btn btn-warning' id='confirm_delete' href='show_floor.php?build_Name={$build['BUILD']}'>ดูรายการ</a>				
 												</td>
 
 											</tr>
@@ -84,15 +62,5 @@ use App\Model\Classroom;
 				</div>
 			</div>
 		</div>
-		<!-- footer -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
-
-		<!-- include link conect file custom Javascript -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/script/script_link/script.inc.link.php";?>
-		<script>
-			$(document).ready( function () {
-    			$('#dataTable').DataTable();
-			} );
-		</script>
-</body>
-</html>
+<!-- footer -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

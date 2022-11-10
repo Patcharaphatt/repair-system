@@ -21,8 +21,15 @@
     font-family: ChatThai-Regular;
 }
 
-.card-forms .card-body input, select {
+.card-forms .card-body input[type="text"],
+select {
     height: 2.68rem;
+    border-radius: 2px;
+    border: 0.5px solid rgb(218, 218, 218);
+    color: #494949;
+}
+
+.card-forms .card-body input[type="file"] {
     border-radius: 2px;
     border: 0.5px solid rgb(218, 218, 218);
     color: #494949;

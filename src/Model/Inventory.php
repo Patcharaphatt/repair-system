@@ -8,7 +8,73 @@ class inventory extends Db {
 
     use functions;
 
-    public function getAllInventory() {
+    public function updateInventoryStus($Id ,$statusId) { // class สำหรับเปลื่ยนแปลงสถานะ status
+        
+        $sql = "UPDATE inventory SET
+            inventory.status = {$statusId}
+            WHERE inventory.Id = {$Id}
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return true;
+    }
+
+    public function readAllInventory() { // ตัวใหม่
+
+        $sql = "
+            SELECT
+                inventory.Id AS ID,
+                inventory.serial AS SERIAL,
+                inventory.name AS INVENTORY_NAME,
+                brand.Id AS BRANDID,
+                brand.title AS BRAND_TITLE,
+                category.Id AS CATEGORYID,
+                category.title AS CATEGORY_TITLE,
+                type.Id AS TYPEID,
+                type.title AS TYPE_TITLE,
+                unit.Id AS UNITID,
+                unit.title AS UNIT_TITLE,
+                COUNT(*) AS COUNT_INVENTORY_STOCK
+
+            FROM
+                inventory
+                INNER JOIN brand ON ( inventory.brand_Id = brand.Id )
+                INNER JOIN category ON ( inventory.category_Id = category.Id )
+                INNER JOIN type ON ( inventory.type_Id = type.Id )
+                INNER JOIN unit ON ( inventory.unit_Id = unit.Id )
+
+            GROUP BY inventory.name
+        ";
+        
+        $stmt = $this->pdo->query($sql);
+        $data = $stmt->fetchAll();
+        return $data;
+    }
+
+    public function readInventorySerialByNameInventory($name) { // ดึงค่า serial number ของอุปกรณ์โดยอ้างอิงชื่ออุปกรณ์ใช้ดึงค่า ajax
+
+        $sql = "
+            SELECT
+                inventory.Id AS ID,
+                inventory.serial AS SERIAL,
+                inventory.name AS INVENTORY_NAME,
+                inventory.status AS STATUS
+
+            FROM
+                inventory
+
+            WHERE
+                inventory.name = ?
+                AND inventory.status = 0
+        ";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$name]);
+        $data = $stmt->fetchAll();
+        return $data;
+    }
+
+    public function getAllInventory() { // ตัวเก่าลบในอนาตค ต้องเขียนให้เสร็จก่อน ไปแก้ไขหน้า index floder inventory
         
         $sql = "
             SELECT
@@ -60,13 +126,46 @@ class inventory extends Db {
         return $data;
     }
 
-    public function getInventoryById($Id) {
+    public function getInventoryById($Id) { // อันเก่า
         
         $sql = "
             SELECT
                 inventory.Id,
                 inventory.serial,
                 inventory.name AS inventoryName,
+                brand.Id AS brand_Id,
+                brand.title AS brandTitle,
+                category.Id AS category_Id,
+                category.title AS categoryTitle,
+                type.Id AS type_Id,
+                type.title AS typeTitle,
+                unit.Id AS unit_Id,
+                unit.title AS unitTitle
+
+            FROM
+                inventory
+                INNER JOIN brand ON ( inventory.brand_Id = brand.Id )
+                INNER JOIN category ON ( inventory.category_Id = category.Id )
+                INNER JOIN type ON ( inventory.type_Id = type.Id )
+                INNER JOIN unit ON ( inventory.unit_Id = unit.Id )
+
+            WHERE
+                inventory.Id = ?
+        ";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$Id]);
+        $data = $stmt->fetchAll();
+        return $data[0];
+    }
+
+    public function readInventoryById($Id) { // อันใหม่
+        
+        $sql = "
+            SELECT
+                inventory.Id AS ID,
+                inventory.serial AS SERIAL,
+                inventory.name AS INVENTORY_NAME,
                 brand.Id AS brand_Id,
                 brand.title AS brandTitle,
                 category.Id AS category_Id,

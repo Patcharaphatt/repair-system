@@ -29,7 +29,7 @@ class login extends Db {
         $data = $stmt->fetchAll();
         $userDB = $data[0];
 
-        if ($userDB['status'] == 1) { // อนาคตจะต้องแก้ไขเงื่อนไข status ใหม่
+        if ($userDB['status'] == 1 || $userDB['status'] == -1) { // อนาคตจะต้องแก้ไขเงื่อนไข status ใหม่
 
             if(md5($user['password']) === $userDB['password']) {
 
@@ -38,6 +38,8 @@ class login extends Db {
                 $_SESSION['name'] = $userDB['fullname'];
                 $_SESSION['email'] = $userDB['email'];
                 $_SESSION['role'] = $userDB['roleTitle'];
+                $_SESSION['status'] = $userDB['status'];
+                $_SESSION['alert_welcome'] = '';
                 $_SESSION['login'] = true;
                 return true;
 

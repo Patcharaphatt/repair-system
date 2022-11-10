@@ -6,14 +6,26 @@ use App\Database\Db;
 
 class account extends Db {
 
-    public function getAllAccount($filters=[], $statusId=1) {
+    public function getAllAccount($filters=[], $statusId=1) { // select ข้อมูลทั้งหมด
         $userId = $_SESSION['Id'];
         $where = '';
         $status = '';
 
-        // กรองสถานะ
-        if ($statusId === (-3) ) {
-            $status .= "AND account.status = -3";
+        $IdStus = 0;
+        switch ($statusId) { // กรอง status ว่าจะ select account status ไหน
+
+            case (-3):
+                $IdStus = (-3);
+                break;
+            case (-2):
+                $IdStus = (-2);
+                break;
+        }
+
+        if ($statusId != 1) {
+            $status .= "AND account.status = {$IdStus}";
+        } else {
+            $status = '';
         }
 
         // กรองข้อมูล
@@ -47,8 +59,67 @@ class account extends Db {
         $data = $stmt->fetchAll();
         return $data;
     }
+    public function readAllAccount($filters=[], $statusId=1) { // select ข้อมูลทั้งหมด (NEW)
 
-    public function addAccount($account) {
+        $userId = $_SESSION['Id'];
+        $where = '';
+        $status = '';
+
+        $IdStus = 0;
+        switch ($statusId) { // กรอง status ว่าจะ select account status ไหน
+
+            case (-3):
+                $IdStus = (-3);
+                break;
+            case (-2):
+                $IdStus = (-2);
+                break;
+            case (-1):
+                $IdStus = (-1);
+                break;
+        }
+
+        if ($statusId != 1) {
+            $status .= "AND account.status = {$IdStus}";
+        } else {
+            $status = '';
+        }
+
+        // กรองข้อมูล
+        if (isset($filters['roleId'])) {
+            if ($filters['roleId']) {
+                $where .= " AND role.Id = :roleId";
+            } else {
+                unset($filters['roleId']);
+            }
+        }
+        
+        $sql = "
+            SELECT
+                account.Id AS ID,
+                account.fullname AS FULL_NAME,
+                account.email AS EMAIL,
+                account.roleId AS ROLEID,
+                role.title AS ROLE_TITLE
+
+            FROM
+                account
+                LEFT JOIN role ON account.roleId = role.Id
+            WHERE
+                account.Id > 0
+                AND account.Id != {$userId}
+                {$status}
+                {$where}
+        ";
+
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($filters);
+        $data = $stmt->fetchAll();
+        return $data;
+    }
+
+    public function addAccount($account) { // เพิ่มข้อมูลลง Table Account
 
         // เข้ารหัส md-5
         $account['password'] = password_hash($account['password'], PASSWORD_DEFAULT);
@@ -102,7 +173,7 @@ class account extends Db {
         return true;
     }
 
-    public function getAccountById($Id) {
+    public function getAccountById($Id) { // class Select ข้อมูลตาม Id ที่ส่งมาจะ Return แค่ค่า Row เดียวเท่านั้น
         $sql = "
         SELECT
             account.Id,
@@ -112,6 +183,30 @@ class account extends Db {
             account.username,
             account.password,
             account.roleId    
+        FROM
+            account
+        WHERE
+            account.Id = ?
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$Id]);
+        $data = $stmt->fetchAll();
+        return $data[0];
+    }
+
+    public function readAccountById($Id) { // class Select ข้อมูลตาม Id ที่ส่งมาจะ Return แค่ค่า Row เดียวเท่านั้น (อันใหม่)
+
+        // print_r($Id);exit;
+
+        $sql = "
+        SELECT
+            account.Id AS ID,
+            account.fullname AS FULL_NAME,
+            account.email AS EMAIL,
+            account.mobile AS MOBILE,
+            account.username AS USERNAME,
+            account.password AS PASSWORD,
+            account.roleId AS ROLEID    
         FROM
             account
         WHERE
@@ -136,7 +231,7 @@ class account extends Db {
 
     }
 
-    public function updateAccount($account) {
+    public function updateAccount($account) { // class อัพเดทข้อมูล
 
         $passwordDB = '';
 

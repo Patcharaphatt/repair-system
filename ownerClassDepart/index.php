@@ -2,29 +2,11 @@
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/auth/auth.php";?>
 
 <?php
-
 use App\Model\OwnerClassDepart;
-
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>หน้าจัดการผู้ใช้งาน</title>
-	<!-- include link conect file custom css -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/css/css_link/css.inc.link.php";?>
-	
-	<!-- icon link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-</head>
-<body>
-
-	<!-- navbar -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
+<!-- navbar -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 	
 
 	<!-- Tables -->
@@ -109,36 +91,5 @@ use App\Model\OwnerClassDepart;
 				</div>
 		</div>
 
-		<!-- footer -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
-
-		<!-- include link conect file custom Javascript -->
-		<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/script/script_link/script.inc.link.php";?>
-
-		<script>
-			$(document).ready( function () {
-    			$('#dataTable').DataTable();
-			} );
-		</script>
-
-		<script>
-			// ยืนยันการลบข้อมูล
-			function confirmDelete() {
-				return confirm('คุณแน่ใจ ที่จะลบรายการนี้');
-			}
-
-			// const queryAll = document.querySelector('tr');
-			// const roomElem = document.getElementById('roomInput');
-			// const roomStyle = document.getElementById('room');
-			// const getRoomText = Number(roomElem.value);
-			// console.log(roomStyle);
-
-			// if (getRoomText === 0) {
-			// 	roomStyle.style.color = "red";
-			// }
-
-			
-		</script>
-
-</body>
-</html>
+<!-- footer -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

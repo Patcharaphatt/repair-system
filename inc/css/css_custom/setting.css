@@ -1,4 +1,5 @@
-body ,html {
+body,
+html {
     background-color: rgb(240, 240, 240);
     width: 100% !important;
     height: 100% !important;
@@ -8,9 +9,10 @@ body ,html {
     margin: 0;
     justify-content: space-between;
 }
+
 * a {
     text-decoration: none;
-    color:rgba(0, 0, 0, 0.95);
+    color: rgba(0, 0, 0, 0.95);
     transition: 0.3s;
 }
 
@@ -29,12 +31,33 @@ body ,html {
     align-items: center;
 }
 
+.text-danger-ct {
+    font-family: ChatThai-Light !important;
+    color: #c50000 !important;
+}
+
+.btn-orange {
+    background-color: rgb(193, 73, 20) !important;
+    color: rgb(240, 240, 240) !important;
+}
+
 input {
     font-size: 1.5rem;
 }
 
-p, label, tr {
+p {
+    margin: 0 !important;
+
+}
+
+p,
+label,
+tr {
     font-size: 1.15rem;
+}
+
+.btn {
+    border-radius: 2px !important;
 }
 
 
@@ -44,4 +67,30 @@ p, label, tr {
 
 .visibility {
     visibility: visible;
+}
+
+.area-stus {
+    width: 80px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.area-stus p {
+    font-size: 13.5px;
+    color: #fff;
+}
+
+.admin-color {
+    background-color: #007245;
+}
+
+.tech-color {
+    background-color: #9d0202;
+}
+
+.ownerRoom-color {
+    background-color: #006bae;
 }

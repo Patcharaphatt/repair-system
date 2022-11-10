@@ -14,24 +14,8 @@ if (isset($_REQUEST['action']) == 'edit') {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>PDO Basic</title>
-
-	<!-- include link conect file custom css -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/css/css_link/css.inc.link.php";?>
-
-    <!-- icon link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-</head>
-<body>
-
-    <!-- navbar -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
+<!-- navbar -->
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
 	<div class="container">
 				<div class="card-forms">
@@ -120,17 +104,6 @@ if (isset($_REQUEST['action']) == 'edit') {
 					</div>
 				</div>
 	</div>
+
     <!-- footer -->
-    <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
-
-    <script>
-        function confirm_createAcc() {
-            return confirm('ระบบจะเพิ่มผู้ใช้งานนี้');
-        }
-
-        function confirm_editAcc() {
-            return confirm('ระบบจะแก้ไขข้อมูลผู้ใช้งานนี้');
-        }
-    </script>
-</body>
-</html>
+<?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>
