@@ -5,7 +5,7 @@ use App\Model\Login;
 use App\Model\OwnerClassDepart;
 
 $user_obj = new login;
-$result = $user_obj->login($_POST);
+$result = $user_obj->login($_REQUEST);
 
 if($result){
 

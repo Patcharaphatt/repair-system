@@ -33,6 +33,7 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                 
                 <!-- hidden input -->
                 <input type="hidden" name="action" value="<?php echo (isset($_REQUEST['action'])=='edit') ? "edit" : "add";?>">
+                <input type="hidden" name="ownerRoomID" value="<?php echo $_SESSION['Id'];?>">
 
                 <!-- forms Groups -->
 
@@ -41,7 +42,7 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                     <div class="col-lg">
                         <div class="form-group">          
                             <label for="computerID">รหัสคอม <small class="form-text text-danger">*</small></label>
-                            <select name="computerID" id="computerID" class="form-control my-2" required autocomplete="off">
+                            <select name="computerID" id="computerID" class="form-control my-2" required autocomplete="off" required>
                                 <option selected disabled>เลือก</option>
                                 <?php
                                     $roomId = $ownerRoom['ROOMID']; // ดึงไอดีห้องที่ผู้ดูแลห้องดูแลอยู่มาใส่ตัวแปร roomId
@@ -64,7 +65,7 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                     <div class="col-lg">
                         <div class="form-group">
                             <label for="computerID">อุปกรณ์ที่เสีย <small class="form-text text-danger">*</small></label>
-                            <select name="inventoryID" id="inventoryID" class="form-control my-2"></select>
+                            <select name="inventoryID" id="inventoryID" class="form-control my-2" required></select>
                         </div>
                     </div>                
                 </div>
@@ -78,7 +79,7 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg">
-                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="rp-img">         
+                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="upload" required>         
                     </div>
                 </div>
 

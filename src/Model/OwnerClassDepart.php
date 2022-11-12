@@ -161,7 +161,7 @@ class ownerClassDepart extends Db {
         $result = $this->getOwnerClassDeptById($Id);
         $checked = $result['room_Id'];
 
-        if($checked === 0) {
+        if($checked == 0) {
 
             $sql = "
                 DELETE FROM class_room_owner WHERE Id = ?

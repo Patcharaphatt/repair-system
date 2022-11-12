@@ -54,6 +54,7 @@ use App\Model\Account;
 
 						$rooms = $Obj->readAllRooms($_REQUEST);
 						$n=0;
+						$colorFont = '';
 						foreach($rooms as $room) {
 							$n++;
 							if($room['STATUS'] <> 0) { // เช็คจากสถานะห้องว่ามีเจ้าของห้องมั้ย -> ตั้งค่าให้มีผู้ดูแลห้องรึยัง
@@ -97,7 +98,7 @@ use App\Model\Account;
 								if($NumberOfComputers > 0){ // จำนวนคอมพิวเตอร์ > 0 มั้ย
 									$STATUS_COMPUTER = $Obj->CheckStusComputersByRoomId($room['ID']); // เช็คสถานะคอมพิวเตอร์โดยอ้างอิง ID ห้องเรียน
 									// print_r($STATUS_COMPUTER);
-									$colorFont = 'warning';
+									$colorFont = 'danger';
 									switch($STATUS_COMPUTER['COMPUTER_STATUS']) {
 										case 1: // สถานะอุปกรณ์ภายในห้องครบ
 											$STATUS_COMPUTER = $NumberOfComputers;
@@ -175,7 +176,7 @@ use App\Model\Account;
 											</div>"; // ปุ่มเพิ่มผู้ดูแลห้อง
 							}
 
-							if ($colorFont == 'warning') { // กำหนดสีการแสดงผล
+							if ($colorFont == 'danger') { // กำหนดสีการแสดงผล
 								$STATUS_COMPUTER = "<div class='text-danger-ct m-0'>{$STATUS_COMPUTER}</div>";
 							} else {
 								$STATUS_COMPUTER = "<div class='text-dark m-0'>{$STATUS_COMPUTER}</div>";

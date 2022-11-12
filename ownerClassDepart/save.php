@@ -17,10 +17,9 @@ $ownerClassDepart = $_REQUEST;
 if ($_REQUEST['action'] == 'delete') {
     
     unset($ownerClassDepart['action']);
-    $accountObj->updateAccStus($ownerClassDepart['userId'], -3);
     $result = $OwnerClassDepartObj->deleteOwnerClassDept($ownerClassDepart['Id']);
-
     if($result) {
+        $accountObj->updateAccStus($ownerClassDepart['userId'], -3);
         $_SESSION['alert'] = 'ลบข้อมูลสำเร็จ';
     } else {
         $_SESSION['error'] = 'ต้องยกเลิกผู้ดูแลห้องก่อนจึงจะสามารถลบรายการนี้ได้';

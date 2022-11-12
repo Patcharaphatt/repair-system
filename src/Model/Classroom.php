@@ -59,6 +59,26 @@ class classroom extends Db {
         return $this->pdo->lastInsertId();
     }
 
+    public function readAdressRoom($Id) { // อ่านที่อยู่ของห้องโดยอ้างอิง Id ห้อง
+        $sql = "
+            SELECT
+                room.Id AS ID,
+                room.floor AS FLOOR,
+                room.build AS BUILD,
+                room.name AS ROOM 
+            FROM
+                room
+
+            WHERE
+                room.Id = ?
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$Id]);
+        $data = $stmt->fetchAll();
+        return $data[0];
+    }
+
     public function readAllBuild() { // class แสดงรายการตึกทั้งหมด
          
         $sql = "

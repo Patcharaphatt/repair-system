@@ -28,10 +28,10 @@ else if ($_REQUEST['action'] == 'add') {
     unset($inventory['Id']);
     $result = $inventoryObj->addInventory($inventory);
 
-    if ($result == 1) {
+    if ($result === 1) {
         $_SESSION['error'] = 'เลข serial number ที่คุณกรอกซ้ำในระบบ กรุณาทำรายการใหม่อีกครั้ง';
     }
-    else if ($result == 2) {
+    else if ($result === 2) {
         $_SESSION['error'] = 'ชื่ออุปกรณ์ซ้ำในระบบกรุณาทำรายการใหม่อีกครั้ง';
     } else {
         $_SESSION['alert'] = "เพิ่มข้อมูลสำเร็จ '{$inventory['inventory_Name']}' จำนวน {$inventory['stock']} รายการ";  

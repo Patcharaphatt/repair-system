@@ -7,7 +7,7 @@ class Db {
 	private $host = "localhost";
 	private $user = "root";
 	private $password = "";
-	private $dbName = "repair_db_app";
+	private $dbName = "repair-system";
 
 	protected $pdo;
 
