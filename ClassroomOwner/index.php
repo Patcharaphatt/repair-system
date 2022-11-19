@@ -55,7 +55,8 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
         <table class="table table-hover align-middle" id="dataTable">
             <thead>
                 <tr>
-                    <th class="elm-1 text-center">รหัส</th>
+                    <th class="elm-1" width='250px'>รูปภาพ</th>
+                    <th class="elm-1 text-center" width='300px'>รหัส</th>
                     <th class='elm-2'>อุปกรณ์ที่เสีย</th>
                     <th class="elm-2 hidden">รหัสคอมที่เสีย</th>
                     <th class='elm-3 hidden'>สถานะ</th>
@@ -68,9 +69,9 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                             $repair_Obj = new repair();
                             $room_Obj = new classroom();
 
-                            $repairs = $repair_Obj->readListOfRepair();
+                            $repairs = $repair_Obj->readListOfRepair($_REQUEST, 'OWNER_ROOM');
                             foreach($repairs as $repair) { // สถานะแจ้งซ่อม
-                                $REPAIR_CODE = str_pad($repair['ID'] , 3, "0", STR_PAD_LEFT); // รหัสแจ้งซ่อม
+                                $REPAIR_CODE = str_pad($repair['ID'] , 4, "0", STR_PAD_LEFT); // รหัสแจ้งซ่อม
                                 $ADDRESS_INVENTORY_ARR = $room_Obj->readAdressRoom($repair['ROOMID']); // ที่อยู่แจ้งซ่อมแบบ Array
                                 $ADDRESS_INVENTORY = "
                                     ตึก {$ADDRESS_INVENTORY_ARR['BUILD']}
@@ -110,6 +111,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                 }
                                 echo "
                                     <tr>
+                                        <td class='elm-1 hidden'><img src='{$repair['OWNERROOM_IMG']}' alt='ไม่มีรูปภาพ' style='width: 240px;'></td>
                                         <td class='elm-1 text-center'>{$REPAIR_CODE}</td>
                                         <td class='elm-2'>{$repair['INVENTORY_NAME']}</td>
                                         <td class='elm-2 hidden'>{$repair['COMPUTER_CODE']}</td>
@@ -122,7 +124,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                                 </button>
                                                 <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
                                                 <li><a class='dropdown-item' href='details_transection.php?Id={$repair['ID']}&action=edit'>รายระเอียดเต็ม</a></li>
-                                                <li><a class='dropdown-item' href='form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
+                                                <li><a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
                                                 <li><a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='save.php?Id={$repair['ID']}&action=delete' class='btn btn-danger'>ยกเลิกรายการ</a></li>
                                                 </ul>
                                             </div>

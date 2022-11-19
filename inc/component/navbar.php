@@ -29,7 +29,7 @@ $status = $_SESSION['status'];
     <div class="collapsible-menu" id="collapsible-menu">
       <ul>
         <!-- หน้าหลัก -->
-        <?php if($status === 1) {?>
+        <?php if($status == 1) {?>
           <li ><a class="link-item" href="/repair-system/<?php echo $role; ?>/index.php">หน้าหลัก</a></li>
         <?php } ?>
         <!-- แก้ไขโปรไฟล์ -->

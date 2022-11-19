@@ -4,6 +4,7 @@
 <?php
 use App\Model\OwnerClassDepart;
 use App\Model\Classroom;
+use App\Model\Repair;
 ?>
 
 
@@ -12,9 +13,15 @@ $accountId = $_SESSION['Id'];
 // echo $accountID ;
 $Obj_ownerRoom = new ownerClassDepart;
 $Obj_classroom = new classroom;
+$Obj_repair = new repair;
 
 $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ดึงข้อมูลผู้ดูแลห้องมา
-// print_r($ownerRoom);
+// print_r($ownerRoom);exit;
+if(isset($_REQUEST['action']) == 'edit') {
+    $repairList = $Obj_repair->readListOfRepairById($_REQUEST['Id']); // ดึงข้อมูลรายการซ๋อมมาแสดงผล
+}
+
+// print_r($repairList);exit;
 ?>
 
 <!-- navbar -->
@@ -32,8 +39,14 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
             <form action="save.php" method="POST" enctype="multipart/form-data">
                 
                 <!-- hidden input -->
-                <input type="hidden" name="action" value="<?php echo (isset($_REQUEST['action'])=='edit') ? "edit" : "add";?>">
+                <input type="hidden" name="action" value="<?php echo isset($_REQUEST['action']) ? "edit" : "add";?>">
                 <input type="hidden" name="ownerRoomID" value="<?php echo $_SESSION['Id'];?>">
+
+                <?php // แสดง Id รายการซ่อมเพื่ออ้างอิงไว้แก้ไข
+                    if(isset($_REQUEST['action']) == 'edit') {
+                        echo "<input type='text' name='Id' value='{$_REQUEST['Id']}'>";
+                    }
+                ?>
 
                 <!-- forms Groups -->
 
@@ -49,7 +62,7 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                                     $Obj = new classroom;
                                     $computers = $Obj->readAllComputersByRoomId($roomId); // ดึงรายการคอมพิวเตอร์ทั้งหมดที่ผู้ดูแลห้องดูแล
                                     foreach($computers as $computer) {
-                                        $selected = ($computer['ID'] == isset($_REQUEST['computerID'])) ? "selected" : ""; // เมื่อ user ทำการแก้ไขรายการซ่อมจะส่ง $_REQUEST['computerID'] มาเปรียบเทียบ
+                                        $selected = ($computer['ID'] == $repairList['COMPUTERID']) ? "selected" : ""; // เมื่อ user ทำการแก้ไขรายการซ่อมจะส่ง $_REQUEST['computerID'] มาเปรียบเทียบ
                                         echo "
                                             <option value='{$computer['ID']}' {$selected}>{$computer['CODE']}</option> 
                                         ";
@@ -73,13 +86,13 @@ $ownerRoom = $Obj_ownerRoom->readOwnerClassDeptByAccountId($accountId); // ด�
                     <div class="col-lg">
                         <div class="form-group">
                             <label for="department_Name">รายระเอียดแจ้งซ่อม / ปัญหา</label>
-                            <textarea name="details" class="form-control my-2" id="exampleFormControlTextarea1" rows="7" maxlength="500" autocomplete="off"></textarea>
+                            <textarea name="details" class="form-control my-2" id="exampleFormControlTextarea1" rows="7" maxlength="500" autocomplete="off"><?php echo (isset($_REQUEST['action']) == 'edit') ? $repairList['DETAILS'] : ""; ?></textarea>
                         </div>
                     </div>                
                 </div>
                 <div class="row mb-4">
-                    <div class="col-lg">
-                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="upload" required>         
+                    <div class="col-lg">       
+                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="upload">         
                     </div>
                 </div>
 

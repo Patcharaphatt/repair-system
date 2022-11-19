@@ -18,7 +18,7 @@ unset($ARR_REQUEST['action']);
 // จัดการรูปภาพ
 $ext = end(explode(".", $_FILES['upload']['name'])); // แยกนามสกุลไฟล์ออกจากชื่อ
 $NEW_NAME = "/repair-system/repair/imgs/" .md5(uniqid()).".{$ext}"; // สร้างชื่อแบบสุ่ม และเอานำสกุลที่แยกมาใส่ไว้ตรงท้าย
-$IMAGE = "/repair-system/repair/imgs/" .md5(uniqid()).".{$ext}"; // เก็บรูปภาพไว้บันทึกลง database
+$IMAGE = $NEW_NAME; // เก็บรูปภาพไว้บันทึกลง database
 move_uploaded_file($_FILES['upload']['tmp_name'], $_SERVER['DOCUMENT_ROOT'].$NEW_NAME); // ย้ายไฟล์ไปที่ folder imgs
 
 
@@ -33,6 +33,15 @@ switch ($ACTION) {
         }
         break;
     case 'edit':
+        $ARR_REQUEST['Image'] = $IMAGE;
+        unset($ARR_REQUEST['ownerRoomID']);
+        $result = $Obj->editListOfRepairById($ARR_REQUEST);
+        if($result) {
+            $_SESSION['alert'] = "แก้ไขรายการซ่อมสำเร็จ";
+            header("location: /repair-system/ClassroomOwner/index.php");
+            exit;
+        }
+        break;
 }
 
 ?>

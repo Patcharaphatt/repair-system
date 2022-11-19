@@ -39,15 +39,31 @@ class repair extends Db {
         return $this->pdo->lastInsertId();
     }
 
-    public function readListOfRepair($filters=[]) { // อ่านรายการซ่อม
+    public function readListOfRepair($filters=[], $LEVEL='') { // อ่านรายการซ่อม
 
         $where = '';
         // กรองข้อมูล
         if (isset($filters['filters'])) {
             if ($filters['filters']) {
-                $where .= " AND {$this->TABLE_NAME}.rp_status = :filters";
+                $where .= "AND {$this->TABLE_NAME}.rp_status = :filters";
             } else {
                 unset($filters['filters']);
+            }
+        }
+
+        // แสดงผลกรองตามสถานะ เช่น นาย A จะเห็นแค่เฉพาะรายการที่ตนเองแจ้งซ่อมเท่านั้น
+        $SHOW_DATA = '';
+        if($LEVEL !== '') {
+            switch($LEVEL) {
+                case 'ADMIN':
+                    $SHOW_DATA .= "";
+                    break;
+                case 'OWNER_ROOM':
+                    $SHOW_DATA .= "AND {$this->TABLE_NAME}.ownerRoom_Id = {$_SESSION['Id']}";
+                    break;
+                case 'TECHNICIAL':
+                    $SHOW_DATA .= "AND {$this->TABLE_NAME}.technician_Id = {$_SESSION['Id']}";
+                    break;
             }
         }
         
@@ -73,16 +89,62 @@ class repair extends Db {
             WHERE
             {$this->TABLE_NAME}.Id > 0
             {$where}
+            {$SHOW_DATA}
         ";
 
-        echo $sql; exit;
+        // echo $sql; exit;
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($filters);
         $data = $stmt->fetchAll();
         return $data;
     }
- 
+
+    public function readListOfRepairById($Id) { // อ่านรายการซ่อมโดยอ้างอิงรายการซ๋อม
+        $sql = "
+            SELECT
+                {$this->TABLE_NAME}.Id AS ID,
+                {$this->TABLE_NAME}.ownerRoom_Id AS OWNERROOMID,
+                {$this->TABLE_NAME}.computer_Id AS COMPUTERID,
+                {$this->TABLE_NAME}.inventory_Id AS INVENTORYID,
+                {$this->TABLE_NAME}.rp_details AS DETAILS,
+                {$this->TABLE_NAME}.rp_status AS REPAIR_STATUS,
+                {$this->TABLE_NAME}.rp_img AS OWNERROOM_IMG,
+                {$this->TABLE_NAME}.ownerRoom_notify_date AS DATE_NOTIFY,
+                class_room_owner.room_Id AS ROOMID,
+                inventory.name AS INVENTORY_NAME,
+                computer.code AS COMPUTER_CODE
+            FROM
+                repair
+                INNER JOIN class_room_owner ON ({$this->TABLE_NAME}.ownerRoom_Id = class_room_owner.account_Id)
+                INNER JOIN inventory ON ({$this->TABLE_NAME}.inventory_Id = inventory.Id)
+                INNER JOIN computer ON ({$this->TABLE_NAME}.computer_Id = computer.Id)
+
+            WHERE
+            {$this->TABLE_NAME}.Id > 0
+            AND {$this->TABLE_NAME}.Id = ?
+        ";
+
+        // echo $sql; exit;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$Id]);
+        $data = $stmt->fetchAll();
+        return $data[0];
+    }
+
+    public function editListOfRepairById($arr) { // แก้ไขรายการซ่อม
+        // print_r($arr);exit;
+        $sql = "UPDATE repair SET
+            {$this->TABLE_NAME}.computer_Id = :computerID,
+            {$this->TABLE_NAME}.inventory_Id = :inventoryID,
+            {$this->TABLE_NAME}.rp_details = :details,
+            {$this->TABLE_NAME}.rp_img = :Image
+            WHERE {$this->TABLE_NAME}.Id = :Id
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($arr);
+        return true;
+    }
 }
 
 ?>
