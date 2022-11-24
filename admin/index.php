@@ -126,7 +126,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
 									
 									$SHOW_TECH = "
 										<li>
-											<a class='dropdown-item' href='../repair/repair_details.php?Id={$repair['ID']}'>ส่งรายการให้ช่าง</a>
+											<a class='dropdown-item' href='../repair/sent_technician.php?Id={$repair['ID']}'>ส่งรายการให้ช่าง</a>
 										</li>
 									";
                                 }
