@@ -63,6 +63,7 @@ class ownerClassDepart extends Db {
             SELECT
                 class_room_owner.Id AS ID,
                 class_room_owner.room_Id AS ROOMID,
+                class_room_owner.department_Id AS DEPARTMENTID,
                 class_room_owner.Account_Id AS ACCOUNTID
 
             FROM
@@ -84,6 +85,7 @@ class ownerClassDepart extends Db {
                 class_room_owner.Id AS ID,
                 class_room_owner.room_Id AS ROOMID,
                 class_room_owner.Account_Id AS ACCOUNTID,
+                class_room_owner.department_Id AS DEPARTMENTID,
                 class_room_owner.status_comfirm_inventory AS INVENTORY_CONFIRM_ALERT
                 
 

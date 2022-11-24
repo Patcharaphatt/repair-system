@@ -294,7 +294,6 @@ class classroom extends Db {
     public function readNumberOfInventoryByComId($Id) { // นับจำนวนอุปกรณ์ในคอมพิวเตอร์เครื่องอ้างอิงโดย computerId
 
         // print_r($Id);exit;
-
         $sql = "
             SELECT
                 conect_inventory_computer.Id AS ID,

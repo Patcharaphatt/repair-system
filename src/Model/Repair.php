@@ -111,6 +111,12 @@ class repair extends Db {
                 {$this->TABLE_NAME}.rp_status AS REPAIR_STATUS,
                 {$this->TABLE_NAME}.rp_img AS OWNERROOM_IMG,
                 {$this->TABLE_NAME}.ownerRoom_notify_date AS DATE_NOTIFY,
+                {$this->TABLE_NAME}.admin_Id AS ADMINID,
+                {$this->TABLE_NAME}.technician_Id AS TECHID,
+                {$this->TABLE_NAME}.technician_operates_date AS DATE_TECH,
+                {$this->TABLE_NAME}.description_job AS DESCRIPTION_DETAILS,
+                {$this->TABLE_NAME}.rp_date_success AS DATE_SUCCESS,
+                {$this->TABLE_NAME}.technicial_rp_img AS TECHNICIAL_IMG,
                 class_room_owner.room_Id AS ROOMID,
                 inventory.name AS INVENTORY_NAME,
                 computer.code AS COMPUTER_CODE

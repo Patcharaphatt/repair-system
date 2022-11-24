@@ -2,149 +2,164 @@
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/auth/auth.php";?>
 
 <?php
-
 use App\Model\Role;
-use App\Model\account;
+use App\Model\repair;
+use App\Model\Classroom;
 ?>
 
 <!-- navbar -->
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
-	<!-- Tables -->
+<?php
+$REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังดำเนินการ', 'ซ่อมสำเร็จ', 'ยกเลิก'];
+?>
 
-	<div class="px-4 d-flex align-items-start h-100">
-		<div class="row">
-			<!-- search -->
-			<div class="operation-card">
-				<div class="row">
-					<div class="col-9 search-transection d-flex align-items-center">
-						<form action="" class="form-inline" method="GET">
-							<div class="d-flex w-100 align-items-center">
-								<div class="mr-component">
-									<h4>รายการผู้ใช้งาน</h4>
-								</div>
+<!-- Tables -->
+<div class="px-4 d-flex align-items-start h-100">
+<div class="row">
+    <!-- search -->
+    <div class="operation-card">
+        <div class="row">
+            <div class="col-9 search-transection d-flex align-items-center">
+                <form action="" class="form-inline" method="GET">
+                    <div class="d-flex w-100 align-items-center">
+                        <div class="mr-component">
+                            <h4>รายการแจ้งซ่อม</h4>
+                        </div>
+                        <div class="mr-component visibility">	
+                            <!-- กรองสถานะการดำเนินการซ่อม -->
+                            <select name="filters" id="filters" class="select_filter form-control">
+                                <option selected disabled>ทั้งหมด</option>
+                                <option value="1"><?php echo $REPAIR_STATUS_TITLE[0]; ?></option>
+                                <option value="2"><?php echo $REPAIR_STATUS_TITLE[1]; ?></option>
+                                <option value="3"><?php echo $REPAIR_STATUS_TITLE[2]; ?></option>
+                                <option value="4"><?php echo $REPAIR_STATUS_TITLE[3]; ?></option>
+                            </select>
+                        </div>
 
-								<div class="mr-component visibility">	
-									<!-- กรองสิทธิ์การใช้งาน -->
-                                    <select name="roleId" id="roleId" class="select_filter form-control">
-                                        <option value="">ทั้งหมด</option>
-                                        <?php
-                                            $rolesObj = new Role();
-                                            $roles = $rolesObj -> getAllRoles();
-                                            foreach($roles as $role) {
-                                                $selected = ($role['roleId'] == $_REQUEST['roleId']) ? "selected" : "";
-												switch($role['roleId']){
-													case 1:
-														$roleTitle = 'แอดมิน';
-														break;
-													case 2:
-														$roleTitle = 'ช่างเทคนิค';
-														break;
-													case 3:
-														$roleTitle = 'ผู้ดูแลห้อง';
-														break;
-												}
-                                                echo "
-                                                    <option value='{$role['roleId']}' {$selected}>{$roleTitle}</option> 
-                                                ";
-                                            }
-                                        ?>
-                                    </select>
-								</div>
-
-								<div class="mr-component visibility">
-									<button type="submit" class="btn-ct btn btn-success text-align-center">ค้นหา</button>
-								</div>
-							</div>
-						</form>
-					</div>
-
-					<div class="col btn-add-transection d-flex justify-content-end align-items-center ">
-						<a href="form.php" class="btn-ct btn btn-success text-align-center visibility">เพิ่มผู้ใช้งาน</a>
-					</div>
-
-				</div>		
+                        <div class="mr-component visibility">
+                            <button type="submit" class="btn-ct btn btn-success text-align-center">ค้นหา</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-					
-			<div class="card-table py-4">
-				<table class="table table-hover align-middle" id="dataTable">
-					<thead>
-						<tr>
-							<th class="elm-1 text-center">ลำดับที่</th>
-							<th class="elm-2">ชื่อ-นามสกุล</th>
-							<th class='elm-3 hidden'>อีเมล์</th>
-                            <th class='elm-4 hidden'>สิทธิ์การใช้งาน</th>
-                            <th></th>
-						</tr>
-					</thead> 
-					<tbody>
 
-								<?php
-									$Obj = new account();
-									$users = $Obj->readAllAccount($_REQUEST);
-									$n=0;
-									foreach($users as $user) {
-										$n++;
 
-										switch($user['ROLEID']){
-											case 1:
-												$USER_ROLE_SHOW = "
-													<div class='area-stus admin-color'>
-														<p>แอดมิน</p>
-													</div>
-												";	
-												break;
-											case 2:
-												$USER_ROLE_SHOW = "
-													<div class='area-stus tech-color'>
-														<p>ช่างเทคนิค</p>
-													</div>
-												";	
-												break;
-											case 3:
-												$USER_ROLE_SHOW = "
-													<div class='area-stus ownerRoom-color'>
-														<p>ผู้ดูแลห้อง</p>
-													</div>
-												";	
-												break;
-										}
 
-										echo "
-											<tr>
-												<td class='elm-1 text-center'>{$n}</td>
-												<td class='elm-2'>{$user['FULL_NAME']}</td>
-												<td class='elm-3 hidden'>{$user['EMAIL']}</td>
-												
-												<td id='role' class='elm-4 hidden'>
-													<div class='container-role-color d-flex justify-content-center'>
-														{$USER_ROLE_SHOW}
-													</div>
-												</td>
-												
-                                                
-												<td>
+        </div>		
+    </div>
+            
+    <div class="card-table py-4">
+        <table class="table table-hover align-middle" id="dataTable">
+            <thead>
+                <tr>
+                    <th class="elm-1 text-center" width='300px'>รหัส</th>
+                    <th class='elm-2'>อุปกรณ์ที่เสีย</th>
+                    <th class="elm-2 hidden">รหัสคอมที่เสีย</th>
+                    <th class="elm-2 hidden">ผู้ปฎิบัติงาน</th>
+                    <th class='elm-3 hidden'>สถานะ</th>
+                    <th></th>
+                </tr>
+            </thead> 
+            <tbody>
 
-													<div class='dropdown d-flex justify-content-end'>
-														<button class='btn btn-warning dropdown-toggle' type='button' id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'>
-															จัดการรายการ
-														</button>
-														<ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
-														<li><a class='dropdown-item' href='details_transection.php?Id={$user['ID']}&action=edit'>ดูรายการ</a></li>
-														<li><a class='dropdown-item' href='form.php?Id={$user['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
-														<li><a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='save.php?Id={$user['ID']}&action=delete' class='btn btn-danger'>ลบรายการ</a></li>
-														</ul>
-													</div>
-				
-												</td>
-											</tr>
-										";
-									}
-								?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+                        <?php
+                            $repair_Obj = new repair();
+                            $room_Obj = new classroom();
+
+                            $repairs = $repair_Obj->readListOfRepair($_REQUEST, 'ADMIN');
+                            foreach($repairs as $repair) { // สถานะแจ้งซ่อม
+                                $REPAIR_CODE = str_pad($repair['ID'] , 4, "0", STR_PAD_LEFT); // รหัสแจ้งซ่อม
+                                $ADDRESS_INVENTORY_ARR = $room_Obj->readAdressRoom($repair['ROOMID']); // ที่อยู่แจ้งซ่อมแบบ Array
+                                $ADDRESS_INVENTORY = "
+                                    ตึก {$ADDRESS_INVENTORY_ARR['BUILD']}
+                                    ชั้น {$ADDRESS_INVENTORY_ARR['FLOOR']}
+                                    ห้อง {$ADDRESS_INVENTORY_ARR['ROOM']}
+                                "; // แสดงผลที่อยู่แจ้งซ่อม
+
+                                switch($repair['REPAIR_STATUS']){ // สถานะแจ้งซ่อม
+                                    case 1:
+                                        $STATUS_SHOW = "
+                                            <div class='area-stus status-color-1'>
+                                                <p>{$REPAIR_STATUS_TITLE[0]}</p>
+                                            </div>
+                                        ";	
+                                        break;
+                                    case 2:
+                                        $STATUS_SHOW = "
+                                            <div class='area-stus status-color-2'>
+                                                <p>{$REPAIR_STATUS_TITLE[1]}</p>
+                                            </div>
+                                        ";	
+                                        break;
+                                    case 3:
+                                        $STATUS_SHOW = "
+                                            <div class='area-stus status-color-3'>
+                                                <p>{$REPAIR_STATUS_TITLE[2]}</p>
+                                            </div>
+                                        ";	
+                                        break;
+                                    case 4:
+                                        $STATUS_SHOW = "
+                                            <div class='area-stus bg-secondary'>
+                                                <p>{$REPAIR_STATUS_TITLE[3]}</p>
+                                            </div>
+                                        ";	
+                                        break;
+                                }
+
+                                // จัดการรูปภาพ หากไม่มีรูปภาพ
+                                $SHOW_IMG = $repair['OWNERROOM_IMG'];
+                                $SHOW_CANCEL = '';
+                                $SHOW_EDIT = '';
+								$SHOW_TECH = '';
+                                if($repair['REPAIR_STATUS'] <> 4) { // ถ้าสถานะเป็นยกเลิกไม่ให้แสดงรายการ แก้ไข และยกเลิก
+                                    $SHOW_CANCEL = "<li>
+                                                        <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='../repair/save.php?Id={$repair['ID']}&action=cancel' class='btn btn-danger'>ยกเลิกรายการ</a>  
+                                                    </li>
+                                    ";
+                                    $SHOW_EDIT = "
+                                        <li>
+                                            <a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a>
+                                        </li>
+                                    ";
+									
+									$SHOW_TECH = "
+										<li>
+											<a class='dropdown-item' href='../repair/repair_details.php?Id={$repair['ID']}'>ส่งรายการให้ช่าง</a>
+										</li>
+									";
+                                }
+                                echo "
+                                    <tr>
+                                        <td class='elm-1 text-center'>{$REPAIR_CODE}</td>
+                                        <td class='elm-2'>{$repair['INVENTORY_NAME']}</td>
+                                        <td class='elm-2 hidden'>{$repair['COMPUTER_CODE']}</td>
+                                        <td class='elm-2 hidden'>{$repair['COMPUTER_CODE']}</td>
+                                        <td class='elm-3 hidden'>{$STATUS_SHOW}</td>
+                                  
+                                        <td>
+                                            <div class='dropdown d-flex justify-content-end'>
+                                                <button class='btn btn-warning dropdown-toggle' type='button' id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    จัดการรายการ
+                                                </button>
+                                                <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
+                                                    <li><a class='dropdown-item' href='../repair/repair_details.php?Id={$repair['ID']}'>รายระเอียดเต็ม</a></li>
+                                                    {$SHOW_TECH}
+                                                    {$SHOW_EDIT}
+                                                    {$SHOW_CANCEL}
+                                                </ul>
+                                            </div>
+        
+                                        </td>
+                                    </tr>
+                                ";
+                            }
+                        ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <!-- footer -->
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

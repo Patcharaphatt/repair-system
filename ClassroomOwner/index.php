@@ -139,7 +139,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                                     จัดการรายการ
                                                 </button>
                                                 <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
-                                                    <li><a class='dropdown-item' href='../repair/repair_details.php'>รายระเอียดเต็ม</a></li>
+                                                    <li><a class='dropdown-item' href='../repair/repair_details.php?Id={$repair['ID']}'>รายระเอียดเต็ม</a></li>
                                                     {$SHOW_EDIT}
                                                     {$SHOW_CANCEL}
                                                 </ul>
