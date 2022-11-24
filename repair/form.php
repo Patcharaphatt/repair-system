@@ -44,7 +44,7 @@ if(isset($_REQUEST['action']) == 'edit') {
 
                 <?php // แสดง Id รายการซ่อมเพื่ออ้างอิงไว้แก้ไข
                     if(isset($_REQUEST['action']) == 'edit') {
-                        echo "<input type='text' name='Id' value='{$_REQUEST['Id']}'>";
+                        echo "<input type='hidden' name='Id' value='{$_REQUEST['Id']}'>";
                     }
                 ?>
 
@@ -92,7 +92,8 @@ if(isset($_REQUEST['action']) == 'edit') {
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg">       
-                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="upload">         
+                        <input class="form-control" id="formFileSm" type="file" autocomplete="off" name="upload">                
+                        <input class="form-control" id="formFileSm" type="hidden" name="Image" value="<?php echo (isset($_REQUEST['action']) == 'edit') ? $repairList['OWNERROOM_IMG'] : ""; ?>">          
                     </div>
                 </div>
 

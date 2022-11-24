@@ -103,15 +103,31 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                         break;
                                     case 4:
                                         $STATUS_SHOW = "
-                                            <div class='area-stus status-color-3'>
+                                            <div class='area-stus bg-secondary'>
                                                 <p>{$REPAIR_STATUS_TITLE[3]}</p>
                                             </div>
                                         ";	
                                         break;
                                 }
+
+                                // จัดการรูปภาพ หากไม่มีรูปภาพ
+                                $SHOW_IMG = $repair['OWNERROOM_IMG'];
+                                $SHOW_CANCEL = '';
+                                $SHOW_EDIT = '';
+                                if($repair['REPAIR_STATUS'] <> 4) { // ถ้าสถานะเป็นยกเลิกไม่ให้แสดงรายการ แก้ไข และยกเลิก
+                                    $SHOW_CANCEL = "<li>
+                                                        <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='../repair/save.php?Id={$repair['ID']}&action=cancel' class='btn btn-danger'>ยกเลิกรายการ</a>  
+                                                    </li>
+                                    ";
+                                    $SHOW_EDIT = "
+                                        <li>
+                                            <a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a>
+                                        </li>
+                                    ";
+                                }
                                 echo "
                                     <tr>
-                                        <td class='elm-1 hidden'><img src='{$repair['OWNERROOM_IMG']}' alt='ไม่มีรูปภาพ' style='width: 240px;'></td>
+                                        <td class='elm-1 hidden'><img src='{$SHOW_IMG}' alt='ไม่มีรูปภาพ' style='width: 240px;'></td>
                                         <td class='elm-1 text-center'>{$REPAIR_CODE}</td>
                                         <td class='elm-2'>{$repair['INVENTORY_NAME']}</td>
                                         <td class='elm-2 hidden'>{$repair['COMPUTER_CODE']}</td>
@@ -123,9 +139,9 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                                     จัดการรายการ
                                                 </button>
                                                 <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>
-                                                <li><a class='dropdown-item' href='details_transection.php?Id={$repair['ID']}&action=edit'>รายระเอียดเต็ม</a></li>
-                                                <li><a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a></li>
-                                                <li><a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='save.php?Id={$repair['ID']}&action=delete' class='btn btn-danger'>ยกเลิกรายการ</a></li>
+                                                    <li><a class='dropdown-item' href='../repair/repair_details.php'>รายระเอียดเต็ม</a></li>
+                                                    {$SHOW_EDIT}
+                                                    {$SHOW_CANCEL}
                                                 </ul>
                                             </div>
         

@@ -145,6 +145,17 @@ class repair extends Db {
         $stmt->execute($arr);
         return true;
     }
+
+    public function updateStusListOfRepairById($Id, $statusId){ // เปลื่ยนสถานะรายการแจ้งซ่อม (ไอดีอ้างอิง, สถานะแจ้งซ่อม)
+        $sql = "UPDATE repair SET
+            repair.rp_status = {$statusId}
+            WHERE repair.Id = {$Id}
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return true;
+    }
 }
 
 ?>
