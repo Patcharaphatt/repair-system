@@ -55,7 +55,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
         <table class="table table-hover align-middle" id="dataTable">
             <thead>
                 <tr>
-                    <th class="elm-1" width='250px'>รูปภาพ</th>
+                    <th class="elm-1" width='150px'>รูปภาพ</th>
                     <th class="elm-1 text-center" width='300px'>รหัส</th>
                     <th class='elm-2'>อุปกรณ์ที่เสีย</th>
                     <th class="elm-2 hidden">รหัสคอมที่เสีย</th>
@@ -116,7 +116,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                 $SHOW_EDIT = '';
                                 if($repair['REPAIR_STATUS'] <> 4) { // ถ้าสถานะเป็นยกเลิกไม่ให้แสดงรายการ แก้ไข และยกเลิก
                                     $SHOW_CANCEL = "<li>
-                                                        <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='../repair/save.php?Id={$repair['ID']}&action=cancel' class='btn btn-danger'>ยกเลิกรายการ</a>  
+                                                        <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item text-danger' href='../repair/save.php?Id={$repair['ID']}&action=cancel&inventoryId={$repair['INVENTORYID']}'>ยกเลิกรายการ</a>  
                                                     </li>
                                     ";
                                     $SHOW_EDIT = "
@@ -127,7 +127,7 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                 }
                                 echo "
                                     <tr>
-                                        <td class='elm-1 hidden'><img src='{$SHOW_IMG}' alt='ไม่มีรูปภาพ' style='width: 240px;'></td>
+                                        <td class='elm-1 hidden'><img src='{$SHOW_IMG}' alt='ไม่มีรูปภาพ' style='width: 150px;'></td>
                                         <td class='elm-1 text-center'>{$REPAIR_CODE}</td>
                                         <td class='elm-2'>{$repair['INVENTORY_NAME']}</td>
                                         <td class='elm-2 hidden'>{$repair['COMPUTER_CODE']}</td>

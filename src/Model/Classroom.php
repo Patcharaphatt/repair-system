@@ -393,13 +393,17 @@ class classroom extends Db {
                 inventory.Id AS INVENTORYID,
                 inventory.name AS INVENTORY_NAME,
                 inventory.serial AS SERIAL,
-                inventory.status AS STATUS
+                inventory.status AS STATUS,
+                inventory.rp_inventory AS RP_INVENTORY
             FROM
                 conect_inventory_computer
                 INNER JOIN inventory ON (conect_inventory_computer.inventoryId = inventory.Id)
                 INNER JOIN computer ON (conect_inventory_computer.computerId = computer.Id)
             WHERE
-                conect_inventory_computer.computerId = ? AND inventory.status=1
+                conect_inventory_computer.computerId = ?
+                AND inventory.status=1
+                AND inventory.rp_inventory!=1
+
         ";
 
         $stmt = $this->pdo->prepare($sql);

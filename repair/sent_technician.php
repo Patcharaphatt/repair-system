@@ -2,52 +2,59 @@
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/auth/auth.php";?>
 
 <?php
-
-use App\Model\Department;
-
-
-if (isset($_REQUEST['action']) == 'edit') {
-    $departmentObj = new department;
-    $department = $departmentObj->getDepartmentById($_REQUEST['Id']); 
-}
-
+use App\Model\Account;
 ?>
 
 <!-- navbar -->
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/navbar.php";?>
 
 	<div class="container">
-				<div class="card-forms">
-                    <!-- title forms -->
-					<div class="card-header text-white d-flex justify-content-between">
-                        <h4 class="title-forms">ฟอร์มส่งเรื่องให้ช่าง</h4>
-                    </div>
+        <div class="card-forms">
+            <!-- title forms -->
+            <div class="card-header text-white d-flex justify-content-between">
+                <h4 class="title-forms">ฟอร์มส่งรายการซ่อมให้นายช่าง</h4>
+            </div>
 
-                    <!-- forms -->
-					<div class="card-body ">
-						<form action="save.php" method="GET">
-                            
-                            <!-- hidden input -->
-                            <input type="hidden" name="action" value="<?php echo (isset($_REQUEST['action'])=='edit') ? "edit" : "add";?>">
-                            <input type="hidden" name="Id" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $department['Id'] : "";?>">
+            <!-- forms -->
+            <div class="card-body ">
+                <form action="save.php" method="GET">
+                    
+                    <!-- hidden input -->
+                    <input type="text" name="action" value="sent_technician">
+                    <input type="text" name="Id" value="<?php echo $_REQUEST['Id']?>">
 
-                            <!-- forms Groups -->
-                            
-                            <div class="row mb-4">
-                                <div class="col-lg">
-                                    <!-- mobile input -->
-                                    <div class="form-group">
-                                        <label for="department_Name">รายชื่อช่าง</label>
-                                        <input type="text" name="department_Name" id="department_Name" class="form-control my-2" maxlength="255" value="<?php echo (isset($_REQUEST['action'])=='edit') ? $department['title'] : "";?>" required>
-            
-                                    </div>
-                                </div>                
+                    <!-- forms Groups -->
+                    <div class="row mb-4">
+                        <div class="col-lg">
+                            <!-- รายชื่อช่างเทคนิค -->
+                            <div class="form-group">
+                                <label for="department_Name">รายชื่อช่าง</label>
+                                
+                                <select name="techId" id="techId" class="form-control my-2" required>
+                                    
+                                    <?php
+                                        
+                                        $Obj = new account();
+                                        // ดึงรายชื่อนายช่างมาแสดงโชว์
+                                        echo '<option selected disabled>เลือก</option>';
+                                        $accounts = $Obj->readAccountLevel(2);
+
+                                        foreach($accounts as $account) {
+                                            echo "
+                                                <option value='{$account['ID']}'>{$account['FULL_NAME']}</option> 
+                                            ";
+                                        }
+                                    ?>
+                                </select>
+
                             </div>
-                            <button class="btn-ct btn btn-success" id="heckFormsAccount" type="submit" 
-                            onclick="return <?php echo (isset($_REQUEST['action'])=='edit') ? 'confirm_editAcc()':'confirm_createAcc()'; ?>">บันทึกข้อมูล</button>
-                        </form>	
-					</div>
-				</div>
+                        </div>                
+                    </div>
+                    <button class="btn-ct btn btn-success" id="heckFormsAccount" type="submit" 
+                    onclick="return confirm_createAcc()">บันทึกข้อมูล</button>
+                </form>	
+            </div>
+        </div>
 	</div>
 <!-- footer -->
 <?php require $_SERVER['DOCUMENT_ROOT']."/repair-system/inc/component/footer.php";?>

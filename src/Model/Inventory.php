@@ -19,6 +19,17 @@ class inventory extends Db {
         return true;
     }
 
+    public function updateInventoryRPStus($Id ,$statusId) { // class ถ้าอุปกรณ์ตัวนี้อยู่ในระหว่างการซ่อมแซมจะไม่ขึ้นให้สามารถแจ้งซ่อมได้
+        
+        $sql = "UPDATE inventory SET
+            inventory.rp_inventory = {$statusId}
+            WHERE inventory.Id = {$Id}
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return true;
+    }
+
     public function readAllInventory() { // ตัวใหม่
 
         $sql = "

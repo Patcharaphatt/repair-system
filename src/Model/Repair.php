@@ -138,6 +138,19 @@ class repair extends Db {
         return $data[0];
     }
 
+    public function sentListOfRepairToTechnician($arr) { // ส่งรายการแจ้งซ่อมให้กับนายช่าง
+        // print_r($arr);exit;
+        $sql = "UPDATE repair SET
+            {$this->TABLE_NAME}.admin_Id = :adminId,
+            {$this->TABLE_NAME}.technician_Id = :techId,
+            {$this->TABLE_NAME}.admin_operates_date = :admin_operates_date
+            WHERE {$this->TABLE_NAME}.Id = :Id
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($arr);
+        return true;
+    }
+
     public function editListOfRepairById($arr) { // แก้ไขรายการซ่อม
         // print_r($arr);exit;
         $sql = "UPDATE repair SET

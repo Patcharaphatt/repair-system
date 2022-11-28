@@ -114,21 +114,26 @@ $REPAIR_STATUS_TITLE = ['รอดำเนินการ', 'กำลังด
                                 $SHOW_EDIT = '';
 								$SHOW_TECH = '';
                                 if($repair['REPAIR_STATUS'] <> 4) { // ถ้าสถานะเป็นยกเลิกไม่ให้แสดงรายการ แก้ไข และยกเลิก
-                                    $SHOW_CANCEL = "<li>
-                                                        <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='../repair/save.php?Id={$repair['ID']}&action=cancel' class='btn btn-danger'>ยกเลิกรายการ</a>  
-                                                    </li>
-                                    ";
-                                    $SHOW_EDIT = "
+                                    
+                                    if($repair['REPAIR_STATUS'] !== 2) {
+                                        // เมนูแก้ไข
+                                        $SHOW_EDIT = "
                                         <li>
-                                            <a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a>
+                                        <a class='dropdown-item' href='../repair/form.php?Id={$repair['ID']}&action=edit' class='btn btn-warning');>แก้ไข</a>
                                         </li>
-                                    ";
-									
-									$SHOW_TECH = "
-										<li>
-											<a class='dropdown-item' href='../repair/sent_technician.php?Id={$repair['ID']}'>ส่งรายการให้ช่าง</a>
-										</li>
-									";
+                                        ";
+                                        // เมนูส่งรายการให้ช่าง
+                                        $SHOW_TECH = "
+                                        <li>
+                                        <a class='dropdown-item' href='../repair/sent_technician.php?Id={$repair['ID']}'>ส่งรายการให้ช่าง</a>
+                                        </li>
+                                        ";
+                                        // เมนูยกเลิกรายการซ่อม
+                                        $SHOW_CANCEL = "<li>
+                                                            <a id='confirm_delete' onclick='return confirmDelete()' class='dropdown-item' href='../repair/save.php?Id={$repair['ID']}&action=cancel' class='btn btn-danger'>ยกเลิกรายการ</a>  
+                                                        </li>
+                                        ";
+                                    }
                                 }
                                 echo "
                                     <tr>

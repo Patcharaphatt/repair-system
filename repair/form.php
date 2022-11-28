@@ -36,11 +36,10 @@ if(isset($_REQUEST['action']) == 'edit') {
 
         <!-- forms -->
         <div class="card-body ">
-            <form action="save.php" method="POST" enctype="multipart/form-data">
-                
+            <form action="save.php" method="POST" enctype="multipart/form-data"> 
                 <!-- hidden input -->
                 <input type="hidden" name="action" value="<?php echo isset($_REQUEST['action']) ? "edit" : "add";?>">
-                <input type="hidden" name="ownerRoomID" value="<?php echo $_SESSION['Id'];?>">
+                <input type="hidden" name="ownerRoomID" value="<?php echo $_SESSION['Id']; // รหัสผู้ดูแลห้อง ?>">
 
                 <?php // แสดง Id รายการซ่อมเพื่ออ้างอิงไว้แก้ไข
                     if(isset($_REQUEST['action']) == 'edit') {
@@ -55,7 +54,8 @@ if(isset($_REQUEST['action']) == 'edit') {
                     <div class="col-lg">
                         <div class="form-group">          
                             <label for="computerID">รหัสคอม <small class="form-text text-danger">*</small></label>
-                            <select name="computerID" id="computerID" class="form-control my-2" required autocomplete="off" required>
+                            <select name="computerID" id="computerID" class="form-control my-2" required autocomplete="off"
+                            <?php echo (isset($_REQUEST['action']) == 'edit') ? "disabled" : "";?>>
                                 <option selected disabled>เลือก</option>
                                 <?php
                                     $roomId = $ownerRoom['ROOMID']; // ดึงไอดีห้องที่ผู้ดูแลห้องดูแลอยู่มาใส่ตัวแปร roomId
@@ -78,7 +78,8 @@ if(isset($_REQUEST['action']) == 'edit') {
                     <div class="col-lg">
                         <div class="form-group">
                             <label for="computerID">อุปกรณ์ที่เสีย <small class="form-text text-danger">*</small></label>
-                            <select name="inventoryID" id="inventoryID" class="form-control my-2" required></select>
+                            <select name="inventoryID" id="inventoryID" class="form-control my-2" required
+                            <?php echo (isset($_REQUEST['action']) == 'edit') ? "disabled" : "";?>></select>
                         </div>
                     </div>                
                 </div>

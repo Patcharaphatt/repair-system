@@ -59,6 +59,28 @@ class account extends Db {
         $data = $stmt->fetchAll();
         return $data;
     }
+
+    public function readAccountLevel($levelId) { // ดึงรายชื่อทั้งหมดตามสิทธิ์การใช้งาน
+        $sql = "
+            SELECT
+                account.Id AS ID,
+                account.fullname AS FULL_NAME
+
+            FROM
+                account
+            WHERE
+                account.Id > 0
+                AND account.roleId = {$levelId}
+        ";
+
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($level);
+        $data = $stmt->fetchAll();
+        return $data;
+    }
+
+
     public function readAllAccount($filters=[], $statusId=1) { // select ข้อมูลทั้งหมด (NEW)
 
         $userId = $_SESSION['Id'];
